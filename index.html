@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Monster Slayer</h1>
+    </header>
+    <div id="game">
+      <section id="monster" class="container">
+        <h2>Monster Health</h2>
+        <div class="healthbar">
+          <div class="healthbar__value" :style="{width: monster < 0 ? 0 : monster + '%'}" :class="gameState()">
+            {{ monster }}/100
+          </div>
+        </div>
+      </section>
+      <section id="player" class="container">
+        <h2>Your Health</h2>
+        <div class="healthbar">
+          <div class="healthbar__value" :style="{width: player < 0 ? 0 : player + '%'}" :class="gameState()">
+            {{ player }}/100
+          </div>
+        </div>
+      </section>
+      <section id="controls">
+        <button @click="attack" :disabled="!playing">ATTACK</button>
+        <button @click="special" :disabled="!playing" >SPECIAL ATTACK</button>
+        <button @click="heal" :disabled="!playing">HEAL</button>
+        <button @click="surrender" :disabled="!playing">SURRENDER</button>
+      </section>
+      <section id="log" class="container">
+        <h2>Battle Log</h2>
+        <ul 
+          v-for="(round, index) in gamerounds" 
+          v-show="gamerounds.length > 0">
+          <li :style= "{color: round.includes('Player') ? '#00a876' : 'red'}">
+            {{ round }}
+          </li>
+        </ul>
+        <p 
+          v-show="!playing" 
+          :style="{color: message.includes('Player') ? '#00a876' : 'red', fontSize: 22 +'px', fontWeight: 700}">
+          {{ message }}
+        </p>
+        <button 
+          @click="newGame()" 
+          v-show="!playing">
+          Start New Game
+        </button>
+      </section>
+    </div>
+  </body>
+</html>
