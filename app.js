@@ -5,25 +5,38 @@ const Game = ({
       monster: 100,
       gamerounds: [],
       message: '',
-      playing: true
+      playing: true,
+      specialAttack: false
+    }
+  },
+  watch:{
+    gamerounds:{
+      deep: true,
+      handler(newValue, OldValue){
+      this.gameState()
+      }
     }
   },
   methods: {
     attack(){
       const playerDamage = Math.floor(Math.random() * 8) + 5;
       this.monster -= playerDamage;
-      this.gamerounds.push(`Player attacks and deals ${playerDamage}`);
+      this.gamerounds.unshift(`Player attacks and deals ${playerDamage}`);
       this.monsterAttack();
     },
     special(){
+      if(this.gamerounds.length % 3 === 0){
+        this.specialAttack = true
+      } else{
       const healthDamage = Math.floor(Math.random() * 14) + 10;
       this.monster -= healthDamage;
-      this.gamerounds.push(`Player attacks and deals ${healthDamage}`);
+      this.gamerounds.unshift(`Player attacks and deals ${healthDamage}`);
       this.monsterAttack();
+      }
     },
     heal(){
       const healCount = Math.floor(Math.random() * 13) + 8;
-      this.gamerounds.push(`Player heals health ${healCount}`);
+      this.gamerounds.unshift(`Player heals health ${healCount}`);
       this.player += healCount;
       if(this.player > 100) this.player = 100;
       this.monsterAttack();
@@ -40,7 +53,7 @@ const Game = ({
     monsterAttack(){
       const monsterDamage = Math.floor(Math.random() * 8) + 8;
       this.player -= monsterDamage;
-      this.gamerounds.push(`Monster attacks and deals ${monsterDamage}`);
+      this.gamerounds.unshift(`Monster attacks and deals ${monsterDamage}`);
     },
     gameState(){
       if(this.player < 0){

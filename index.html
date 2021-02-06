@@ -20,7 +20,7 @@
       <section id="monster" class="container">
         <h2>Monster Health</h2>
         <div class="healthbar">
-          <div class="healthbar__value" :style="{width: monster < 0 ? 0 : monster + '%'}" :class="gameState()">
+          <div class="healthbar__value" :style="{width: monster < 0 ? 0 : monster + '%'}">
             {{ monster }}/100
           </div>
         </div>
@@ -28,14 +28,14 @@
       <section id="player" class="container">
         <h2>Your Health</h2>
         <div class="healthbar">
-          <div class="healthbar__value" :style="{width: player < 0 ? 0 : player + '%'}" :class="gameState()">
+          <div class="healthbar__value" :style="{width: player < 0 ? 0 : player + '%'}">
             {{ player }}/100
           </div>
         </div>
       </section>
       <section id="controls">
         <button @click="attack" :disabled="!playing">ATTACK</button>
-        <button @click="special" :disabled="!playing" >SPECIAL ATTACK</button>
+        <button @click="special" :disabled="!playing" :disabled="specialAttack">SPECIAL ATTACK</button>
         <button @click="heal" :disabled="!playing">HEAL</button>
         <button @click="surrender" :disabled="!playing">SURRENDER</button>
       </section>
