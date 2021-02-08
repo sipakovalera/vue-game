@@ -14,9 +14,13 @@ const Game = ({
       deep: true,
       handler(newValue, OldValue){
       this.gameState()
+      if(newValue.length % 3 === 0){
+        this.specialAttack = true
+      } else{
+        this.specialAttack = false
       }
     }
-  },
+  }},
   methods: {
     attack(){
       const playerDamage = Math.floor(Math.random() * 8) + 5;
@@ -25,14 +29,10 @@ const Game = ({
       this.monsterAttack();
     },
     special(){
-      if(this.gamerounds.length % 3 === 0){
-        this.specialAttack = true
-      } else{
       const healthDamage = Math.floor(Math.random() * 14) + 10;
       this.monster -= healthDamage;
       this.gamerounds.unshift(`Player attacks and deals ${healthDamage}`);
       this.monsterAttack();
-      }
     },
     heal(){
       const healCount = Math.floor(Math.random() * 13) + 8;
